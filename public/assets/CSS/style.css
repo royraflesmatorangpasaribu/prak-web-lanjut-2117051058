@@ -1,23 +1,39 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+/* CSS for create user */
+/* CSS kustom untuk mengatur tampilan */
+.custom-container {
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.custom-form {
+  background-color: rgba(255, 255, 255, 0.8); /* Latar belakang transparan */
+  padding: 20px;
+  border-radius: 10px;
+  border:100px;
+}
+
+/* @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
-}
+} */
 
 /* buat ke center */
-body {
+/* body {
   display: flex;
-  /* mengatur posisi kotak */
+  
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   background: #717274;
-}
+} */
 
 /* membuat box */
-.box {
+/* .box {
   position: relative;
   width: 410px;
   height: 450px;
@@ -48,10 +64,10 @@ body {
   position: relative;
   width: 300px;
   margin-top: 35px;
-}
+} */
 
 /* isi input */
-.box form .inputBox input {
+/* .box form .inputBox input {
   position: relative;
   width: 100%;
   padding: 20px 0px 10px;
@@ -83,10 +99,10 @@ body {
   color: #717274;
   font-size: 0.75em;
   transform: translateY(-34px);
-}
+} */
 
 /* garis */
-.box form .inputBox i {
+/* .box form .inputBox i {
   position: absolute;
   left: 0;
   bottom: 0;
@@ -121,4 +137,4 @@ body {
 
 .box form input[type="submit"]:active {
   opacity: 0.8;
-}
+} */
