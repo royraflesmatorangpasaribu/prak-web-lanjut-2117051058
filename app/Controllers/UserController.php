@@ -7,10 +7,24 @@ use App\Controllers\BaseController;
 
 class UserController extends BaseController
 {
+    public $userModel;
+    public $kelasModel;
+
     protected $helpers=['Form'];
+
+    public function __construct(){
+        $this->userModel = new UserModel();
+        $this->kelasModel = new KelasModel();
+    }
+
     public function index()
     {
-        //
+        $data = [
+            'title' => 'List User',
+            'users' => $this->userModel->getUser(),
+        ];
+
+        return view('list_user', $data);
     }
 
     public function profile($nama = "", $kelas = "", $npm = "")
@@ -25,27 +39,14 @@ class UserController extends BaseController
     }
 
     public function create()
-    {
-        $kelas = [
-            [
-                'id' => 1,
-                'nama_kelas' => 'A'
-            ],
-            [
-                'id' => 2,
-                'nama_kelas' => 'B'
-            ],
-            [
-                'id' => 3,
-                'nama_kelas' => 'C'
-            ],
-            [
-                'id' => 4,
-                'nama_kelas' => 'D'
-            ],
-        ];
-        
+    {   
+        // Membuat data kelas sesuai dengan yang ada di database
+        // $kelasModel = new kelasModel();
+
+        $kelas = $this->kelasModel->getKelas();
+
         $data = [
+            'title' => 'Create User',
             'kelas' => $kelas,
         ];
 
@@ -56,9 +57,9 @@ class UserController extends BaseController
         // dd($this->request->getVar());  // test data masuk or no
 
         // agar tampilan di store kelas terpanggil A, B, C, D
-        $kelasModel = new KelasModel();
+        // $kelasModel = new KelasModel();
         if($this->request->getVar('kelas') != ''){
-            $kelas_select = $kelasModel->where('id', $this->request->getVar('kelas'))->first();
+            $kelas_select = $this->kelasModel->where('id', $this->request->getVar('kelas'))->first();
             $nama_kelas = $kelas_select['nama_kelas'];
         }
         else{
@@ -96,20 +97,25 @@ class UserController extends BaseController
             return redirect()->back()->withInput()->with('nama_kelas', $nama_kelas);
         }
        
-        $userModel = new UserModel();
+        // $userModel = new UserModel();
 
-        $userModel->saveUser ([
+        $this->userModel->saveUser ([
             'nama' => $this->request->getVar('nama'),
             'id_kelas' => $this->request->getVar('kelas'),
             'npm' => $this->request->getVar('npm'),
         ]);
+        
+        //agar setelah melakukan save data, user di redirect ke halaman /user tanpa perlu menampilkan halaman profile
+        return redirect()->to ('/user');
 
-        $data = [
-            'nama' => $this->request->getVar('nama'),
-            'kelas' => $nama_kelas,
-            'npm' => $this->request->getVar('npm'),
-        ];
-        return view('profile', $data);
+        // digunakan jika ingin untuk menampilkan data ke halaman profile
+        // $data = [
+        //     'title' => 'Profile',
+        //     'nama' => $this->request->getVar('nama'),
+        //     'kelas' => $nama_kelas,
+        //     'npm' => $this->request->getVar('npm'),
+        // ];
+        // return view('profile', $data);
     }
 
 }
