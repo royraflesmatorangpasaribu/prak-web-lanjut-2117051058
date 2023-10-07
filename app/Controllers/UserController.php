@@ -56,6 +56,10 @@ class UserController extends BaseController
     public function store(){
         // dd($this->request->getVar());  // test data masuk or no
 
+        $path = 'assets/uploads/img/';
+        $foto = $this->request->getFile('foto');
+        $name = $foto->getRandomName();
+
         // agar tampilan di store kelas terpanggil A, B, C, D
         // $kelasModel = new KelasModel();
         if($this->request->getVar('kelas') != ''){
@@ -88,6 +92,14 @@ class UserController extends BaseController
                 'required' => '{field} harus di isi!!',
                 ]
             ],
+            'foto' => [
+                'rules' => 'uploaded[foto]|is_image[foto]',
+                'errors' => [
+                    'uploaded' => '{field} harus di isi!!',
+                    'is_image' => '{field} harus di isi dengan gambar!'
+                ]
+            ],
+            // 'foto' => 'uploaded[foto]|is_image[foto]'
             // 'nama' => 'required|alpha_space',
             // 'npm' => 'required|is_unique[user.npm]',
             // 'kelas' => 'required'
@@ -96,6 +108,10 @@ class UserController extends BaseController
             session()->setFlashdata('nama_kelas');
             return redirect()->back()->withInput()->with('nama_kelas', $nama_kelas);
         }
+
+        if($foto->move($path, $name)) {
+            $foto = base_url($path.$name);
+        }
        
         // $userModel = new UserModel();
 
@@ -103,6 +119,7 @@ class UserController extends BaseController
             'nama' => $this->request->getVar('nama'),
             'id_kelas' => $this->request->getVar('kelas'),
             'npm' => $this->request->getVar('npm'),
+            'foto' => $foto
         ]);
         
         //agar setelah melakukan save data, user di redirect ke halaman /user tanpa perlu menampilkan halaman profile
@@ -116,6 +133,16 @@ class UserController extends BaseController
         //     'npm' => $this->request->getVar('npm'),
         // ];
         // return view('profile', $data);
+    }
+    public function show($id){
+        $user = $this->userModel->getUser($id);
+
+        $data = [
+            'title' => 'Profile',
+            'user'  => $user,
+        ];
+        
+        return view('profile', $data);
     }
 
 }
