@@ -13,7 +13,7 @@
                 <div class="mb-3">
                 <center>
                 <img src="<?= $user['foto'] ?? base_url('/assets/img/foto_def.png')?>" alt="foto" style="height: 250px; width: 250px; border-radius: 50%; object-fit: cover; object-position: 0 -8px;"  border="2px" ><br>
-                Priview Foto
+                Preview Foto
                 </center>  
                     <label for="foto" class="form-label">Foto</label>
                     <input type="file" class="form-control <?= (empty(validation_show_error('foto'))) ? '' : 'is-invalid' ?>"  id="foto" name="foto">
