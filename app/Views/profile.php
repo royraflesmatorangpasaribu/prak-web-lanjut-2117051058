@@ -7,6 +7,7 @@
         <a class="navbar-brand" href="#">Profile</a>
      </div>
 </nav> -->
+<br>
 <div class="biodata">
     <div style="text-align:center;">
     <img src="<?= $user['foto'] ?? base_url('/assets/img/foto_def.png')?>" alt="foto" style="height: 250px; width: 250px; border-radius: 50%; object-fit: cover; object-position: 0 -8px;"  border="2px" ><br>
